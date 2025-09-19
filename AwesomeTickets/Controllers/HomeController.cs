@@ -1,21 +1,27 @@
 using System.Diagnostics;
 using AwesomeTickets.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using AwesomeTickets.Data;
 
 namespace AwesomeTickets.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;   
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        // Edit Index?home shows event list
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var events = await _context.Events
+                .OrderByDescending(e => e.CreatedAt)
+                .ToListAsync();
+            return View(events);
         }
 
         public IActionResult Privacy()

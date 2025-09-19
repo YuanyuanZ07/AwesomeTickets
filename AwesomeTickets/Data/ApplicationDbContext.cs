@@ -3,10 +3,10 @@ using AwesomeTickets.Models;
 
 namespace AwesomeTickets.Data
 {
-    public class ApplicationDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-             : base(options)
+            : base(options)
         {
         }
 
